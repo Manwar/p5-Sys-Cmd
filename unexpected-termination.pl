@@ -13,3 +13,7 @@ $proc->stdin->print("x\n");
 $proc->wait_child;
 
 print "Process ended with " . $proc->exit;
+
+END {
+    print "END block\n";
+}
