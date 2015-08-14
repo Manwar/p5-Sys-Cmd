@@ -62,19 +62,21 @@ sub spawn {
 
     defined $cmd[0] || Carp::confess '$cmd must be defined';
 
-    unless ( ref $cmd[0] eq 'CODE' ) {
-        if ( !-e $cmd[0] ) {
-            require File::Which;
-            $cmd[0] = File::Which::which( $cmd[0] )
-              || Carp::confess 'command not found: ' . $cmd[0];
-        }
+    if (0) {
+        unless ( ref $cmd[0] eq 'CODE' ) {
+            if ( !-e $cmd[0] ) {
+                require File::Which;
+                $cmd[0] = File::Which::which( $cmd[0] )
+                  || Carp::confess 'command not found: ' . $cmd[0];
+            }
 
-        if ( !-f $cmd[0] ) {
-            Carp::confess 'command not a file: ' . $cmd[0];
-        }
+            if ( !-f $cmd[0] ) {
+                Carp::confess 'command not a file: ' . $cmd[0];
+            }
 
-        if ( !-x $cmd[0] ) {
-            Carp::confess 'command not executable: ' . $cmd[0];
+            if ( !-x $cmd[0] ) {
+                Carp::confess 'command not executable: ' . $cmd[0];
+            }
         }
     }
 
@@ -88,7 +90,6 @@ sub spawn {
 
     return Sys::Cmd->new(%args);
 }
-
 has 'cmd' => (
     is  => 'ro',
     isa => sub {
